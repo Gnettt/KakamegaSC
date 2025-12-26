@@ -1,3 +1,13 @@
 {
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/about/page": "app/about/page.js",
+  "/sports-facilities/page": "app/sports-facilities/page.js",
+  "/membership/page": "app/membership/page.js",
+  "/events/page": "app/events/page.js",
+  "/hospitality/page": "app/hospitality/page.js",
+  "/news/page": "app/news/page.js",
+  "/leadership/page": "app/leadership/page.js",
+  "/gallery/page": "app/gallery/page.js",
+  "/downloads/page": "app/downloads/page.js",
+  "/contact/page": "app/contact/page.js"
 }
