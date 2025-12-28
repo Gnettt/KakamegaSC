@@ -50,7 +50,7 @@ export default function Events() {
     <div className="min-h-screen">
       <section className="section-padding">
         <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#865807' }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1C5739' }}>
             Events & Tournaments
           </h1>
           <p className="text-gray-700 text-lg mb-8 max-w-2xl">
@@ -71,18 +71,18 @@ export default function Events() {
                 <div
                   key={event.id}
                   className="border-l-4 p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition"
-                  style={{ borderColor: '#865807' }}
+                  style={{ borderColor: '#1C5739' }}
                 >
                   <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
                     <div className="flex-1">
-                      <h3 className="text-2xl font-bold mb-2" style={{ color: '#865807' }}>
+                      <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C5739' }}>
                         {event.title}
                       </h3>
                       <p className="text-gray-700 mb-3">{event.description}</p>
                       <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                         <span>📅 {new Date(event.date).toLocaleDateString()}</span>
                         <span>📍 {event.location}</span>
-                        <span className="px-3 py-1 rounded-full" style={{ backgroundColor: '#f8f6f1', color: '#865807' }}>
+                        <span className="px-3 py-1 rounded-full" style={{ backgroundColor: '#f8f6f1', color: '#1C5739' }}>
                           {event.event_type}
                         </span>
                       </div>
@@ -94,7 +94,7 @@ export default function Events() {
           )}
 
           <div className="mt-12 p-8 rounded-lg" style={{ backgroundColor: '#f8f6f1' }}>
-            <h2 className="text-2xl font-bold mb-4" style={{ color: '#865807' }}>
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
               Featured Events
             </h2>
             <ul className="space-y-2 text-gray-700">

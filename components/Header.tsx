@@ -37,7 +37,7 @@ export default function Header() {
               />
             </div>
             <div className="hidden sm:block">
-              <h1 className="font-bold text-sm leading-tight" style={{ color: '#865807' }}>
+              <h1 className="font-bold text-sm leading-tight" style={{ color: '#1C5739' }}>
                 Kakamega<br />Sports Club
               </h1>
             </div>
@@ -50,7 +50,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 className="text-sm font-medium text-gray-700 transition"
-                style={{ color: '#865807' }}
+                style={{ color: '#1C5739' }}
               >
                 {link.label}
               </Link>
@@ -58,15 +58,8 @@ export default function Header() {
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:block">
-            <Link
-              href="/membership"
-              className="px-6 py-2 font-semibold text-white rounded-lg transition hover:opacity-90"
-              style={{ backgroundColor: '#865807' }}
-            >
-              Become a Member
-            </Link>
-          </div>
+          
+          
 
           {/* Mobile Menu Button */}
           <button
@@ -89,19 +82,12 @@ export default function Header() {
                 href={link.href}
                 className="text-sm font-medium text-gray-700 hover:transition py-2"
                 onClick={() => setIsMenuOpen(false)}
-                style={{ color: '#865807' }}
+                style={{ color: '#1C5739' }}
               >
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/membership"
-              className="px-6 py-2 font-semibold text-white rounded-lg transition hover:opacity-90 text-center"
-              style={{ backgroundColor: '#865807' }}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Become a Member
-            </Link>
+           
           </nav>
         )}
       </div>

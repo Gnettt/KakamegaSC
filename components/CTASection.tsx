@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function CTASection() {
   return (
-    <section className="section-padding" style={{ backgroundColor: '#865807' }}>
+    <section className="section-padding" style={{ backgroundColor: '#1C5739' }}>
       <div className="container-custom text-center text-white">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
           Ready to Join Kakamega Sports Club?
@@ -14,7 +14,7 @@ export default function CTASection() {
           <Link
             href="/membership"
             className="px-8 py-3 font-semibold rounded-lg transition bg-white"
-            style={{ color: '#865807' }}
+            style={{ color: '#1C5739' }}
           >
             Learn About Membership
           </Link>

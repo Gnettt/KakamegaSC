@@ -43,7 +43,7 @@ export default function HighlightCards() {
   return (
     <section className="section-padding" style={{ backgroundColor: '#f8f6f1' }}>
       <div className="container-custom">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: '#865807' }}>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: '#1C5739' }}>
           Quick Highlights
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -53,7 +53,7 @@ export default function HighlightCards() {
                 className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition cursor-pointer h-full"
               >
                 <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold mb-2" style={{ color: '#865807' }}>
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C5739' }}>
                   {item.title}
                 </h3>
                 <p className="text-gray-600 text-sm">{item.description}</p>

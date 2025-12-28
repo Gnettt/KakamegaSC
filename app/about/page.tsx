@@ -3,12 +3,12 @@ export default function About() {
     <div className="min-h-screen">
       <section className="section-padding">
         <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#865807' }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1C5739' }}>
             About Kakamega Sports Club
           </h1>
           <div className="grid md:grid-cols-2 gap-8 mt-8">
             <div>
-              <h2 className="text-2xl font-semibold mb-4" style={{ color: '#865807' }}>
+              <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1C5739' }}>
                 Our History
               </h2>
               <p className="text-gray-700 leading-relaxed mb-4">
@@ -16,20 +16,20 @@ export default function About() {
               </p>
             </div>
             <div>
-              <h2 className="text-2xl font-semibold mb-4" style={{ color: '#865807' }}>
+              <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1C5739' }}>
                 What We Stand For
               </h2>
               <ul className="space-y-3">
                 <li className="flex items-start">
-                  <span className="mr-3 mt-1" style={{ color: '#865807' }}>✓</span>
+                  <span className="mr-3 mt-1" style={{ color: '#1C5739' }}>✓</span>
                   <span className="text-gray-700">Community, sportsmanship, and inclusivity</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="mr-3 mt-1" style={{ color: '#865807' }}>✓</span>
+                  <span className="mr-3 mt-1" style={{ color: '#1C5739' }}>✓</span>
                   <span className="text-gray-700">Quality facilities and memorable experiences</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="mr-3 mt-1" style={{ color: '#865807' }}>✓</span>
+                  <span className="mr-3 mt-1" style={{ color: '#1C5739' }}>✓</span>
                   <span className="text-gray-700">A vibrant social environment for members and guests</span>
                 </li>
               </ul>
@@ -40,7 +40,7 @@ export default function About() {
 
       <section className="section-padding" style={{ backgroundColor: '#f8f6f1' }}>
         <div className="container-custom">
-          <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: '#865807' }}>
+          <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: '#1C5739' }}>
             Our Facilities
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
@@ -53,7 +53,7 @@ export default function About() {
               { title: 'Accommodation', desc: 'Comfortable rooms for members and guests' }
             ].map((facility, idx) => (
               <div key={idx} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
-                <h3 className="text-lg font-semibold mb-2" style={{ color: '#865807' }}>
+                <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C5739' }}>
                   {facility.title}
                 </h3>
                 <p className="text-gray-600 text-sm">{facility.desc}</p>

@@ -49,7 +49,7 @@ export default function News() {
     <div className="min-h-screen">
       <section className="section-padding">
         <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#865807' }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1C5739' }}>
             News & Announcements
           </h1>
           <p className="text-gray-700 text-lg mb-8">
@@ -70,13 +70,13 @@ export default function News() {
                 <div
                   key={article.id}
                   className="border-l-4 p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition"
-                  style={{ borderColor: '#865807' }}
+                  style={{ borderColor: '#1C5739' }}
                 >
                   <div className="flex justify-between items-start gap-4 mb-3">
-                    <h3 className="text-2xl font-bold flex-1" style={{ color: '#865807' }}>
+                    <h3 className="text-2xl font-bold flex-1" style={{ color: '#1C5739' }}>
                       {article.title}
                     </h3>
-                    <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: '#f8f6f1', color: '#865807' }}>
+                    <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: '#f8f6f1', color: '#1C5739' }}>
                       {article.category}
                     </span>
                   </div>

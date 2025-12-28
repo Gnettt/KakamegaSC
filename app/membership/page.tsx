@@ -37,7 +37,7 @@ export default function Membership() {
     <div className="min-h-screen">
       <section className="section-padding">
         <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#865807' }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1C5739' }}>
             Membership
           </h1>
           <p className="text-gray-700 text-lg mb-8">
@@ -49,10 +49,10 @@ export default function Membership() {
               <div
                 key={idx}
                 className="border-2 rounded-lg overflow-hidden transition-all cursor-pointer"
-                style={{ borderColor: '#865807' }}
+                style={{ borderColor: '#1C5739' }}
                 onClick={() => setExpandedCategory(expandedCategory === idx ? null : idx)}
               >
-                <div className="p-6" style={{ backgroundColor: '#865807' }}>
+                <div className="p-6" style={{ backgroundColor: '#1C5739' }}>
                   <h3 className="text-xl font-bold text-white">{category.title}</h3>
                 </div>
                 <div className="p-6">
@@ -63,21 +63,21 @@ export default function Membership() {
           </div>
 
           <div style={{ backgroundColor: '#f8f6f1' }} className="rounded-lg p-8 mb-8">
-            <h2 className="text-3xl font-bold mb-6" style={{ color: '#865807' }}>
+            <h2 className="text-3xl font-bold mb-6" style={{ color: '#1C5739' }}>
               Benefits of Joining
             </h2>
             <ul className="space-y-4">
               {benefits.map((benefit, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <span style={{ color: '#865807' }} className="text-xl mt-1">✓</span>
+                  <span style={{ color: '#1C5739' }} className="text-xl mt-1">✓</span>
                   <span className="text-gray-700">{benefit}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="bg-white border-2" style={{ borderColor: '#865807' }}>
-            <div className="p-8" style={{ backgroundColor: '#865807' }}>
+          <div className="bg-white border-2" style={{ borderColor: '#1C5739' }}>
+            <div className="p-8" style={{ backgroundColor: '#1C5739' }}>
               <h2 className="text-2xl font-bold text-white">How to Join</h2>
             </div>
             <div className="p-8">
@@ -93,14 +93,14 @@ export default function Membership() {
                     link.click();
                   }}
                   className="px-6 py-3 font-semibold text-white rounded-lg transition hover:opacity-90"
-                  style={{ backgroundColor: '#865807' }}
+                  style={{ backgroundColor: '#1C5739' }}
                 >
                   Download Membership Form
                 </button>
                 <Link
                   href="/contact"
                   className="px-6 py-3 font-semibold text-white rounded-lg transition hover:opacity-90"
-                  style={{ backgroundColor: '#865807' }}
+                  style={{ backgroundColor: '#1C5739' }}
                 >
                   Contact Us
                 </Link>

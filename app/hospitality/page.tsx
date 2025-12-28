@@ -51,7 +51,7 @@ export default function Hospitality() {
     <div className="min-h-screen">
       <section className="section-padding">
         <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#865807' }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1C5739' }}>
             Clubhouse & Hospitality
           </h1>
           <p className="text-gray-700 text-lg mb-8">
@@ -60,7 +60,7 @@ export default function Hospitality() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <div>
-              <h2 className="text-2xl font-bold mb-4" style={{ color: '#865807' }}>
+              <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
                 Restaurant & Bar
               </h2>
               <p className="text-gray-700 mb-4">
@@ -69,7 +69,7 @@ export default function Hospitality() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold mb-4" style={{ color: '#865807' }}>
+              <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
                 Sports Bar
               </h2>
               <p className="text-gray-700 mb-4">
@@ -79,7 +79,7 @@ export default function Hospitality() {
           </div>
 
           <div style={{ backgroundColor: '#f8f6f1' }} className="p-8 rounded-lg mb-12">
-            <h2 className="text-2xl font-bold mb-6" style={{ color: '#865807' }}>
+            <h2 className="text-2xl font-bold mb-6" style={{ color: '#1C5739' }}>
               Venue Hire & Events
             </h2>
             <p className="text-gray-700 mb-6">
@@ -101,8 +101,8 @@ export default function Hospitality() {
             </div>
           </div>
 
-          <div className="bg-white border-2" style={{ borderColor: '#865807' }}>
-            <div className="p-8" style={{ backgroundColor: '#865807' }}>
+          <div className="bg-white border-2" style={{ borderColor: '#1C5739' }}>
+            <div className="p-8" style={{ backgroundColor: '#1C5739' }}>
               <h2 className="text-2xl font-bold text-white">Booking Inquiry Form</h2>
             </div>
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
@@ -116,7 +116,7 @@ export default function Hospitality() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                    style={{ '--tw-ring-color': '#865807' } as any}
+                    style={{ '--tw-ring-color': '#1C5739' } as any}
                   />
                 </div>
                 <div>
@@ -128,7 +128,7 @@ export default function Hospitality() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                    style={{ '--tw-ring-color': '#865807' } as any}
+                    style={{ '--tw-ring-color': '#1C5739' } as any}
                   />
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function Hospitality() {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                    style={{ '--tw-ring-color': '#865807' } as any}
+                    style={{ '--tw-ring-color': '#1C5739' } as any}
                   />
                 </div>
                 <div>
@@ -153,7 +153,7 @@ export default function Hospitality() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                    style={{ '--tw-ring-color': '#865807' } as any}
+                    style={{ '--tw-ring-color': '#1C5739' } as any}
                   >
                     <option value="">Select event type</option>
                     <option value="Wedding">Wedding</option>
@@ -174,7 +174,7 @@ export default function Hospitality() {
                     value={formData.eventDate}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                    style={{ '--tw-ring-color': '#865807' } as any}
+                    style={{ '--tw-ring-color': '#1C5739' } as any}
                   />
                 </div>
                 <div>
@@ -185,7 +185,7 @@ export default function Hospitality() {
                     value={formData.guestCount}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                    style={{ '--tw-ring-color': '#865807' } as any}
+                    style={{ '--tw-ring-color': '#1C5739' } as any}
                   />
                 </div>
               </div>
@@ -198,14 +198,14 @@ export default function Hospitality() {
                   onChange={handleChange}
                   rows={4}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                  style={{ '--tw-ring-color': '#865807' } as any}
+                  style={{ '--tw-ring-color': '#1C5739' } as any}
                 ></textarea>
               </div>
 
               <button
                 type="submit"
                 className="w-full px-6 py-3 font-semibold text-white rounded-lg transition hover:opacity-90"
-                style={{ backgroundColor: '#865807' }}
+                style={{ backgroundColor: '#1C5739' }}
               >
                 Send Booking Inquiry
               </button>

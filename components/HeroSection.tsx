@@ -18,7 +18,7 @@ export default function HeroSection() {
         <Link
           href="/membership"
           className="inline-block px-8 py-3 font-semibold text-lg rounded-lg transition hover:opacity-90"
-          style={{ backgroundColor: '#865807' }}
+          style={{ backgroundColor: '#1C5739' }}
         >
           Become a Member
         </Link>

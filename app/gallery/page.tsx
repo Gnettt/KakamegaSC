@@ -100,8 +100,8 @@ export default function Gallery() {
                 onClick={() => setSelectedCategory(category)}
                 className="px-4 py-2 rounded-lg font-medium transition capitalize"
                 style={{
-                  backgroundColor: selectedCategory === category ? '#865807' : '#f8f6f1',
-                  color: selectedCategory === category ? 'white' : '#865807'
+                  backgroundColor: selectedCategory === category ? '#1C5739' : '#f8f6f1',
+                  color: selectedCategory === category ? 'white' : '#1C5739'
                 }}
               >
                 {category}
@@ -131,7 +131,7 @@ export default function Gallery() {
                     </div>
                   </div>
                   <div className="p-4 bg-white">
-                    <h3 className="font-bold mb-1" style={{ color: '#865807' }}>
+                    <h3 className="font-bold mb-1" style={{ color: '#1C5739' }}>
                       {image.title}
                     </h3>
                     {image.description && (

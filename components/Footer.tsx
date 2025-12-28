@@ -4,7 +4,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer style={{ backgroundColor: '#865807' }} className="text-white">
+    <footer style={{ backgroundColor: '#1C5739' }} className="text-white">
       <div className="container-custom py-12">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
@@ -40,14 +40,7 @@ export default function Footer() {
             <p className="text-sm text-gray-200">
               © {currentYear} Kakamega Sports Club. All rights reserved.
             </p>
-            <div className="flex gap-4">
-              <a href="https://facebook.com" className="text-gray-200 hover:text-white transition">
-                Facebook
-              </a>
-              <a href="https://instagram.com" className="text-gray-200 hover:text-white transition">
-                Instagram
-              </a>
-            </div>
+            
           </div>
         </div>
       </div>
