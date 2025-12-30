@@ -32,42 +32,13 @@ export default function Gallery() {
 
         if (error) {
           console.error('Error fetching gallery:', error);
-          // Set placeholder images
-          setImages([
-            {
-              id: '1',
-              title: 'Golf Course',
-              description: 'Beautiful 9-hole course',
-              image_url: '/api/placeholder?category=Golf',
-              category: 'Golf'
-            },
-            {
-              id: '2',
-              title: 'Club Life',
-              description: 'Members enjoying social events',
-              image_url: '/api/placeholder?category=ClubLife',
-              category: 'Club Life'
-            },
-            {
-              id: '3',
-              title: 'Junior Programs',
-              description: 'Young members in action',
-              image_url: '/api/placeholder?category=Junior',
-              category: 'Junior'
-            },
-            {
-              id: '4',
-              title: 'Aerial View',
-              description: 'Course aerial photography',
-              image_url: '/api/placeholder?category=Aerial',
-              category: 'Aerial'
-            }
-          ]);
+          setImages([]);
         } else {
           setImages(data || []);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Unexpected error:', error);
+        setImages([]);
       } finally {
         setLoading(false);
       }
@@ -77,17 +48,19 @@ export default function Gallery() {
   }, []);
 
   const categories = ['all', ...new Set(images.map(img => img.category))];
-  const filteredImages = selectedCategory === 'all'
-    ? images
-    : images.filter(img => img.category === selectedCategory);
+  const filteredImages =
+    selectedCategory === 'all'
+      ? images
+      : images.filter(img => img.category === selectedCategory);
 
   return (
     <div className="min-h-screen">
       <section className="section-padding">
         <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#865807' }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[#1C5739]">
             Gallery
           </h1>
+
           <p className="text-gray-700 text-lg mb-8">
             Explore moments from tournaments, events, and club life at Kakamega Sports Club.
           </p>
@@ -100,8 +73,10 @@ export default function Gallery() {
                 onClick={() => setSelectedCategory(category)}
                 className="px-4 py-2 rounded-lg font-medium transition capitalize"
                 style={{
-                  backgroundColor: selectedCategory === category ? '#1C5739' : '#f8f6f1',
-                  color: selectedCategory === category ? 'white' : '#1C5739'
+                  backgroundColor:
+                    selectedCategory === category ? '#1C5739' : '#f8f6f1',
+                  color:
+                    selectedCategory === category ? 'white' : '#1C5739',
                 }}
               >
                 {category}
@@ -122,20 +97,25 @@ export default function Gallery() {
               {filteredImages.map(image => (
                 <div
                   key={image.id}
-                  className="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition bg-gray-100 h-64"
+                  className="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition bg-white"
                 >
-                  <div className="relative w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
-                    <div className="text-center text-gray-600">
-                      <p className="text-4xl mb-2">🖼️</p>
-                      <p className="text-sm">{image.category}</p>
-                    </div>
+                  <div className="relative w-full h-64">
+                    <Image
+                      src={image.image_url}
+                      alt={image.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <div className="p-4 bg-white">
-                    <h3 className="font-bold mb-1" style={{ color: '#1C5739' }}>
+
+                  <div className="p-4">
+                    <h3 className="font-bold mb-1 text-[#1C5739]">
                       {image.title}
                     </h3>
                     {image.description && (
-                      <p className="text-sm text-gray-600">{image.description}</p>
+                      <p className="text-sm text-gray-600">
+                        {image.description}
+                      </p>
                     )}
                   </div>
                 </div>
