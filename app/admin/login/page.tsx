@@ -10,11 +10,7 @@ export default function AdminLogin() {
   const router = useRouter();
 
   const login = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) return alert(error.message);
     router.push('/admin/dashboard');
   };

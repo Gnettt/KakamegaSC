@@ -58,27 +58,49 @@ export default function Hospitality() {
             Exceptional dining and event spaces for memorable experiences.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <div>
-              <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
-                Restaurant & Bar
-              </h2>
-              <p className="text-gray-700 mb-4">
-                Enjoy great meals and refreshments in a relaxed, welcoming atmosphere. Our chef prepares quality dishes using fresh ingredients, complemented by a well-stocked bar featuring local and international beverages.
-              </p>
+          {/* Alternating Image Sections */}
+          <div className="space-y-16">
+            {/* Restaurant & Bar */}
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="md:w-1/2">
+                <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
+                  Restaurant & Bar
+                </h2>
+                <p className="text-gray-700 mb-4">
+                  Enjoy great meals and refreshments in a relaxed, welcoming atmosphere. Our chef prepares quality dishes using fresh ingredients, complemented by a well-stocked bar featuring local and international beverages.
+                </p>
+              </div>
+              <div className="md:w-1/2 h-56 md:h-64 rounded-xl overflow-hidden shadow">
+                <img
+                  src="/images/restaurant.jpg"
+                  alt="Restaurant & Bar"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
 
-            <div>
-              <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
-                Sports Bar
-              </h2>
-              <p className="text-gray-700 mb-4">
-                Catch live sports, enjoy drinks, and connect with fellow members and guests. Our sports bar features multiple screens, comfortable seating, and a vibrant atmosphere perfect for watching the big match.
-              </p>
+            {/* Conference Halls */}
+            <div className="flex flex-col md:flex-row items-center gap-8 md:flex-row-reverse">
+              <div className="md:w-1/2">
+                <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
+                  Conference Halls
+                </h2>
+                <p className="text-gray-700 mb-4">
+                  Catch live sports, enjoy drinks, and connect with fellow members and guests. Our sports bar features multiple screens, comfortable seating, and a vibrant atmosphere perfect for watching the big match.
+                </p>
+              </div>
+              <div className="md:w-1/2 h-56 md:h-64 rounded-xl overflow-hidden shadow">
+                <img
+                  src="/images/conference.jpg"
+                  alt="Conference Halls"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
 
-          <div style={{ backgroundColor: '#f8f6f1' }} className="p-8 rounded-lg mb-12">
+          {/* Venue Hire & Events Cards */}
+          <div style={{ backgroundColor: '#f8f6f1' }} className="p-8 rounded-lg my-12">
             <h2 className="text-2xl font-bold mb-6" style={{ color: '#1C5739' }}>
               Venue Hire & Events
             </h2>
@@ -92,7 +114,7 @@ export default function Hospitality() {
                 { icon: '🎯', title: 'Corporate Days', desc: 'Team building and company events' },
                 { icon: '🎉', title: 'Private Functions', desc: 'Birthdays, anniversaries, and celebrations' }
               ].map((item, idx) => (
-                <div key={idx} className="bg-white p-4 rounded-lg">
+                <div key={idx} className="bg-white p-4 rounded-lg shadow">
                   <div className="text-3xl mb-2">{item.icon}</div>
                   <h4 className="font-semibold text-gray-800 mb-1">{item.title}</h4>
                   <p className="text-sm text-gray-600">{item.desc}</p>
@@ -101,6 +123,7 @@ export default function Hospitality() {
             </div>
           </div>
 
+          {/* Booking Inquiry Form */}
           <div className="bg-white border-2" style={{ borderColor: '#1C5739' }}>
             <div className="p-8" style={{ backgroundColor: '#1C5739' }}>
               <h2 className="text-2xl font-bold text-white">Booking Inquiry Form</h2>

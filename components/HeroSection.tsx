@@ -1,28 +1,67 @@
+'use client';
+
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function HeroSection() {
   return (
-    <div
-      className="relative h-96 md:h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-300 to-gray-400"
+    <section
+      className="
+        relative
+        flex
+        items-center
+        justify-center
+        overflow-hidden
+        bg-gradient-to-b
+        from-gray-300
+        to-gray-400
+        h-[520px]
+        md:h-[400px]
+      "
+      style={{
+        marginTop: 'var(--nav-height)',
+      }}
     >
-      {/* Placeholder for hero image */}
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 opacity-30"></div>
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 opacity-30" />
 
-      <div className="relative z-10 container-custom text-center text-white">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
-          Building Bonds Beyond the Game
-        </h1>
-        <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
-          Kakamega Sports Club is a welcoming members' club in the heart of Western Kenya bringing together sport, community, and great hospitality in a beautiful setting near Kakamega Town and the Kakamega Forest.
-        </p>
-        <Link
-          href="/membership"
-          className="inline-block px-8 py-3 font-semibold text-lg rounded-lg transition hover:opacity-90"
-          style={{ backgroundColor: '#1C5739' }}
+      <div className="relative z-10 max-w-4xl px-6 text-center text-white">
+        {/* Animated heading */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="text-3xl md:text-5xl font-bold mb-4 leading-tight"
         >
-          Become a Member
-        </Link>
+          Building Bonds Beyond the Game
+        </motion.h1>
+
+        {/* Animated paragraph */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+          className="text-base md:text-lg mb-8 max-w-2xl mx-auto leading-relaxed"
+        >
+          Kakamega Sports Club is a welcoming members' club in the heart of Western Kenya, bringing together sport, community, and great hospitality in a beautiful setting near Kakamega Town and the Kakamega Forest.
+        </motion.p>
+
+        {/* Animated button */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
+        >
+          <Link
+            href="/membership"
+            className="inline-block px-8 py-3 font-semibold text-lg rounded-lg transition hover:opacity-90"
+            style={{ backgroundColor: '#1C5739' }}
+          >
+            Become a Member
+          </Link>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
+

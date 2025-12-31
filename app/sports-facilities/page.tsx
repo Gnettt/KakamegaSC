@@ -1,11 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-
 const facilities = [
   {
     name: 'Golf',
-    icon: '⛳',
+    image: '/images/golf.jpg',
     description:
       'Enjoy our well-maintained 9-hole golf course with a friendly club culture.',
     details: [
@@ -18,7 +16,7 @@ const facilities = [
   },
   {
     name: 'Tennis',
-    icon: '🎾',
+    image: '/images/tennis.jpg',
     description:
       'A social and competitive tennis environment for all levels.',
     details: [
@@ -30,7 +28,7 @@ const facilities = [
   },
   {
     name: 'Squash',
-    icon: '🏐',
+    image: '/images/squash.jpg',
     description: 'Fast-paced squash for fitness and competition.',
     details: [
       'Training schedules',
@@ -41,11 +39,11 @@ const facilities = [
   },
   {
     name: 'Other Facilities',
-    icon: '🎮',
+    image: '/images/facilities.jpg',
     description: 'Family-friendly spaces and indoor games.',
     details: [
       'Kids play area',
-      'Indoor games: Darts, Pool Table, Table Tennis, Chess',
+      'Indoor games: Darts, Pool, Table Tennis, Chess',
       'Club spaces for social events and gatherings',
     ],
     contact: 'Club Management',
@@ -53,100 +51,82 @@ const facilities = [
 ];
 
 export default function SportsFacilities() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen">
-      <section className="section-padding">
-        <div className="container-custom">
-          <h1
-            className="text-4xl md:text-5xl font-bold mb-4"
-            style={{ color: '#1C5739' }}
-          >
-            Sports & Facilities
-          </h1>
+    <section className="section-padding">
+      <div className="container-custom">
+        <h1
+          className="text-4xl md:text-5xl font-bold mb-4"
+          style={{ color: '#1C5739' }}
+        >
+          Sports & Facilities
+        </h1>
 
-          <p className="text-gray-700 text-lg mb-8 max-w-2xl">
-            Explore our sports and family-friendly facilities designed for
-            active lifestyles and social connection.
-          </p>
+        <p className="text-gray-700 text-lg mb-16 max-w-2xl">
+          Explore our sports and family-friendly facilities designed for
+          active lifestyles and social connection.
+        </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {facilities.map((facility, idx) => {
-              const isOpen = openIndex === idx;
+        <div className="space-y-16">
+          {facilities.map((facility, idx) => {
+            const isEven = idx % 2 === 0;
 
-              return (
-                <div
-                  key={facility.name}
-                  className="border-2 rounded-lg overflow-hidden transition-all"
-                  style={{
-                    borderColor: '#1C5739',
-                    backgroundColor: isOpen ? '#f8f6f1' : 'white',
-                  }}
-                >
-                  {/* ✅ HEADER ONLY IS CLICKABLE */}
-                  <button
-                    type="button"
-                    className="w-full p-6 flex items-center justify-between text-left"
-                    style={{ backgroundColor: '#1C5739' }}
-                    onClick={() =>
-                      setOpenIndex(isOpen ? null : idx)
-                    }
-                  >
-                    <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                      <span className="text-3xl">
-                        {facility.icon}
-                      </span>
-                      {facility.name}
-                    </h3>
-
-                    <span
-                      className={`text-white text-xl transition-transform ${
-                        isOpen ? 'rotate-180' : ''
-                      }`}
-                    >
-                      ⌄
-                    </span>
-                  </button>
-
-                  {/* BODY */}
-                  <div className="p-6">
-                    <p className="text-gray-700 mb-4">
-                      {facility.description}
-                    </p>
-
-                    {isOpen && (
-                      <div className="space-y-3 mt-4 pt-4 border-t border-gray-200">
-                        {facility.details.map((detail, i) => (
-                          <div
-                            key={i}
-                            className="flex items-start gap-3"
-                          >
-                            <span
-                              className="font-bold"
-                              style={{ color: '#1C5739' }}
-                            >
-                              ✓
-                            </span>
-                            <span className="text-gray-700">
-                              {detail}
-                            </span>
-                          </div>
-                        ))}
-
-                        <p className="text-sm mt-4 pt-4 border-t border-gray-200">
-                          <strong>Contact:</strong>{' '}
-                          {facility.contact}
-                        </p>
-                      </div>
-                    )}
-                  </div>
+            return (
+              <div
+                key={facility.name}
+                className={`flex flex-col md:flex-row items-center gap-8 ${
+                  !isEven ? 'md:flex-row-reverse' : ''
+                }`}
+              >
+                {/* IMAGE */}
+                <div className="w-full md:w-1/2 h-[220px] md:h-[280px] rounded-lg overflow-hidden shadow-sm">
+                  <img
+                    src={facility.image}
+                    alt={facility.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              );
-            })}
-          </div>
+
+                {/* TEXT */}
+                <div className="w-full md:w-1/2">
+                  <h2
+                    className="text-2xl md:text-3xl font-semibold mb-3"
+                    style={{ color: '#1C5739' }}
+                  >
+                    {facility.name}
+                  </h2>
+
+                  <p className="text-gray-700 mb-4 text-sm md:text-base">
+                    {facility.description}
+                  </p>
+
+                  <div className="space-y-2 mb-4">
+                    {facility.details.map((detail, i) => (
+                      <div
+                        key={i}
+                        className="flex items-start gap-2"
+                      >
+                        <span
+                          className="font-bold"
+                          style={{ color: '#1C5739' }}
+                        >
+                          ✓
+                        </span>
+                        <span className="text-gray-700 text-sm md:text-base">
+                          {detail}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="text-xs md:text-sm text-gray-700">
+                    <strong>Contact:</strong> {facility.contact}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

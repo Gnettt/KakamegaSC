@@ -9,6 +9,7 @@ interface TeamMember {
   position: string;
   committee: string;
   email?: string;
+  image_url?: string; // add image URL field
 }
 
 const MANAGEMENT_POSITIONS = [
@@ -49,69 +50,65 @@ export default function LeadershipPage() {
         console.error('Error fetching team members:', error);
       } else {
         const members = data || [];
-        setManagement(
-          members.filter(m => m.committee === 'Management')
-        );
-        setSports(
-          members.filter(m => m.committee === 'Sports')
-        );
+        setManagement(members.filter(m => m.committee === 'Management'));
+        setSports(members.filter(m => m.committee === 'Sports'));
       }
-
       setLoading(false);
     };
 
     fetchMembers();
   }, []);
 
-  const getLeaderForPosition = (
-    members: TeamMember[],
-    position: string
-  ) => members.find(m => m.position === position);
+  const getLeaderForPosition = (members: TeamMember[], position: string) =>
+    members.find(m => m.position === position);
 
-  const PositionRow = ({
+  const PositionCard = ({
     position,
     member,
   }: {
     position: string;
     member?: TeamMember;
   }) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center p-4">
-      <p className="font-semibold text-gray-800">
-        {position}
-      </p>
-
-      {member ? (
-        <div>
-          <p
-            className="font-bold text-lg"
-            style={{ color: '#1C5739' }}
-          >
-            {member.name}
-          </p>
-          {member.email && (
-            <a
-              href={`mailto:${member.email}`}
-              className="text-sm text-gray-600 hover:underline"
-            >
-              {member.email}
-            </a>
-          )}
+    <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 p-4">
+      {member?.image_url ? (
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow flex-shrink-0">
+          <img
+            src={member.image_url}
+            alt={member.name}
+            className="w-full h-full object-cover"
+          />
         </div>
       ) : (
-        <p className="italic text-sm text-gray-500">
-          Position currently vacant
-        </p>
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+          No Image
+        </div>
       )}
+
+      <div className="flex-1">
+        <p className="font-semibold text-gray-800">{position}</p>
+        {member ? (
+          <>
+            <p className="font-bold text-lg text-[#1C5739]">{member.name}</p>
+            {member.email && (
+              <a
+                href={`mailto:${member.email}`}
+                className="text-sm text-gray-600 hover:underline"
+              >
+                {member.email}
+              </a>
+            )}
+          </>
+        ) : (
+          <p className="italic text-sm text-gray-500">Position currently vacant</p>
+        )}
+      </div>
     </div>
   );
 
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="max-w-6xl mx-auto px-4 py-16">
-        <h1
-          className="text-4xl md:text-5xl font-bold mb-4"
-          style={{ color: '#1C5739' }}
-        >
+        <h1 className="text-4xl md:text-5xl font-bold mb-12 text-[#1C5739]">
           Leadership
         </h1>
 
@@ -120,46 +117,34 @@ export default function LeadershipPage() {
         ) : (
           <>
             {/* Management Committee */}
-            <div className="mb-20">
-              <h2
-                className="text-3xl font-bold mb-6"
-                style={{ color: '#1C5739' }}
-              >
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold mb-6 text-[#1C5739]">
                 Management Committee
               </h2>
 
-              <div className="bg-white rounded-lg shadow-sm divide-y">
+              <div className="bg-white rounded-xl shadow divide-y">
                 {MANAGEMENT_POSITIONS.map(position => (
-                  <PositionRow
+                  <PositionCard
                     key={position}
                     position={position}
-                    member={getLeaderForPosition(
-                      management,
-                      position
-                    )}
+                    member={getLeaderForPosition(management, position)}
                   />
                 ))}
               </div>
             </div>
 
             {/* Sports Committee */}
-            <div>
-              <h2
-                className="text-3xl font-bold mb-6"
-                style={{ color: '#1C5739' }}
-              >
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold mb-6 text-[#1C5739]">
                 Sports Committee
               </h2>
 
-              <div className="bg-white rounded-lg shadow-sm divide-y">
+              <div className="bg-white rounded-xl shadow divide-y">
                 {SPORTS_POSITIONS.map(position => (
-                  <PositionRow
+                  <PositionCard
                     key={position}
                     position={position}
-                    member={getLeaderForPosition(
-                      sports,
-                      position
-                    )}
+                    member={getLeaderForPosition(sports, position)}
                   />
                 ))}
               </div>
