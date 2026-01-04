@@ -12,9 +12,6 @@ export default function HeroSection() {
         items-center
         justify-center
         overflow-hidden
-        bg-gradient-to-b
-        from-gray-300
-        to-gray-400
         h-[520px]
         md:h-[400px]
       "
@@ -22,11 +19,18 @@ export default function HeroSection() {
         marginTop: 'var(--nav-height)',
       }}
     >
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 opacity-30" />
+      {/* 🔹 Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/background.jpg')",
+        }}
+      />
+
+      {/* 🔹 Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/40" />
 
       <div className="relative z-10 max-w-4xl px-6 text-center text-white">
-        {/* Animated heading */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,7 +40,6 @@ export default function HeroSection() {
           Building Bonds Beyond the Game
         </motion.h1>
 
-        {/* Animated paragraph */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -46,7 +49,6 @@ export default function HeroSection() {
           Kakamega Sports Club is a welcoming members' club in the heart of Western Kenya, bringing together sport, community, and great hospitality in a beautiful setting near Kakamega Town and the Kakamega Forest.
         </motion.p>
 
-        {/* Animated button */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -64,4 +66,3 @@ export default function HeroSection() {
     </section>
   );
 }
-

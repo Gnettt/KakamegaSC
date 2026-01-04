@@ -14,28 +14,57 @@ export default function AdminDashboard() {
 
   const [loading, setLoading] = useState(true);
 
+  // Fetch counts from Supabase
+  const fetchStats = async () => {
+    const [news, events, gallery, leadership] = await Promise.all([
+      supabase.from('news').select('news_id', { count: 'exact', head: true }),
+      supabase.from('events').select('event_id', { count: 'exact', head: true }),
+      supabase.from('gallery').select('id', { count: 'exact', head: true }),
+      supabase.from('leadership').select('leader_id', { count: 'exact', head: true }),
+    ]);
+
+    setStats({
+      news: news.count || 0,
+      events: events.count || 0,
+      gallery: gallery.count || 0,
+      leadership: leadership.count || 0,
+    });
+
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchStats = async () => {
-      const [news, events, gallery, leadership] = await Promise.all([
-        supabase.from('news').select('id', { count: 'exact', head: true }),
-        supabase.from('events').select('id', { count: 'exact', head: true }),
-        supabase.from('gallery').select('id', { count: 'exact', head: true }),
-        supabase
-          .from('team_members')
-          .select('id', { count: 'exact', head: true }),
-      ]);
-
-      setStats({
-        news: news.count || 0,
-        events: events.count || 0,
-        gallery: gallery.count || 0,
-        leadership: leadership.count || 0,
-      });
-
-      setLoading(false);
-    };
-
+    // Initial fetch
     fetchStats();
+
+    // Subscribe to realtime changes for each table
+    const newsSub = supabase
+      .channel('public:news')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'news' }, () => fetchStats())
+      .subscribe();
+
+    const eventsSub = supabase
+      .channel('public:events')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'events' }, () => fetchStats())
+      .subscribe();
+
+    const gallerySub = supabase
+      .channel('public:gallery')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'gallery' }, () => fetchStats())
+      .subscribe();
+
+    const leadershipSub = supabase
+      .channel('public:leadership')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'leadership' }, () => fetchStats())
+      .subscribe();
+
+    // Cleanup subscriptions on unmount
+    return () => {
+      supabase.removeChannel(newsSub);
+      supabase.removeChannel(eventsSub);
+      supabase.removeChannel(gallerySub);
+      supabase.removeChannel(leadershipSub);
+    };
   }, []);
 
   if (loading) {
@@ -145,7 +174,7 @@ export default function AdminDashboard() {
             href="/admin/gallery"
             className="bg-white text-[#1C5739] px-6 py-2 rounded font-semibold hover:opacity-90"
           >
-            Upload Images
+            Edit Gallery
           </Link>
         </div>
       </div>

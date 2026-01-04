@@ -3,7 +3,7 @@
 const facilities = [
   {
     name: 'Golf',
-    image: '/images/golf.jpg',
+    image: './golf.jpg',
     description:
       'Enjoy our well-maintained 9-hole golf course with a friendly club culture.',
     details: [
@@ -16,7 +16,7 @@ const facilities = [
   },
   {
     name: 'Tennis',
-    image: '/images/tennis.jpg',
+    image: './tennis.jpg',
     description:
       'A social and competitive tennis environment for all levels.',
     details: [
@@ -28,7 +28,7 @@ const facilities = [
   },
   {
     name: 'Squash',
-    image: '/images/squash.jpg',
+    image: './squash.jpg',
     description: 'Fast-paced squash for fitness and competition.',
     details: [
       'Training schedules',
@@ -39,7 +39,7 @@ const facilities = [
   },
   {
     name: 'Other Facilities',
-    image: '/images/facilities.jpg',
+    image: './other.jpg',
     description: 'Family-friendly spaces and indoor games.',
     details: [
       'Kids play area',

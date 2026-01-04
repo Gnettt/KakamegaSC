@@ -1,157 +1,107 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase/client';
 
-interface TeamMember {
-  id: string;
-  name: string;
-  position: string;
-  committee: string;
-  email?: string;
-  image_url?: string; // add image URL field
-}
+type Leader = {
+  leader_id: number;
+  image: string | null; // STORAGE PATH
+  role: string;
+  full_name: string;
+  email: string | null;
+};
 
-const MANAGEMENT_POSITIONS = [
+const MANAGEMENT_ROLES = [
   'Chairperson',
   'Vice-Chairperson',
-  'Honorary Secretary',
-  'Honorary Treasurer',
+  'Honorable Secretary',
+  'Honorable Treasurer',
   'Chairman of Sports Committee',
-  'Co-opted Member',
+  'Co-opted Member 1',
+  'Co-opted Member 2',
 ];
 
-const SPORTS_POSITIONS = [
+const SPORTS_ROLES = [
   'Captain',
   'Vice-Captain',
   'Handicap Manager',
   'Green Keeper',
   'Lady Captain',
   'Vice Lady Captain',
+  'Junior Convenor',
 ];
 
 export default function LeadershipPage() {
-  const [management, setManagement] = useState<TeamMember[]>([]);
-  const [sports, setSports] = useState<TeamMember[]>([]);
+  const [leaders, setLeaders] = useState<Leader[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-
-    const fetchMembers = async () => {
-      const { data, error } = await supabase
-        .from('team_members')
-        .select('*');
-
-      if (error) {
-        console.error('Error fetching team members:', error);
-      } else {
-        const members = data || [];
-        setManagement(members.filter(m => m.committee === 'Management'));
-        setSports(members.filter(m => m.committee === 'Sports'));
-      }
+    const fetchLeaders = async () => {
+      const { data } = await supabase.from('leadership').select('*');
+      setLeaders(data || []);
       setLoading(false);
     };
 
-    fetchMembers();
+    fetchLeaders();
   }, []);
 
-  const getLeaderForPosition = (members: TeamMember[], position: string) =>
-    members.find(m => m.position === position);
+  const getImageUrl = (path: string) =>
+    supabase.storage.from('leadership').getPublicUrl(path).data.publicUrl;
 
-  const PositionCard = ({
-    position,
-    member,
-  }: {
-    position: string;
-    member?: TeamMember;
-  }) => (
-    <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 p-4">
-      {member?.image_url ? (
-        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow flex-shrink-0">
+  const getLeaderByRole = (role: string) =>
+    leaders.find(l => l.role === role);
+
+  const RoleCard = ({ role }: { role: string }) => {
+    const leader = getLeaderByRole(role);
+
+    return (
+      <div className="flex items-center gap-6 p-6">
+        {leader?.image ? (
           <img
-            src={member.image_url}
-            alt={member.name}
-            className="w-full h-full object-cover"
+            src={getImageUrl(leader.image)}
+            className="w-40 h-40 rounded-full object-cover"
           />
-        </div>
-      ) : (
-        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
-          No Image
-        </div>
-      )}
-
-      <div className="flex-1">
-        <p className="font-semibold text-gray-800">{position}</p>
-        {member ? (
-          <>
-            <p className="font-bold text-lg text-[#1C5739]">{member.name}</p>
-            {member.email && (
-              <a
-                href={`mailto:${member.email}`}
-                className="text-sm text-gray-600 hover:underline"
-              >
-                {member.email}
-              </a>
-            )}
-          </>
         ) : (
-          <p className="italic text-sm text-gray-500">Position currently vacant</p>
+          <div className="w-40 h-40 rounded-full bg-gray-200 flex items-center justify-center text-sm">
+            No Image
+          </div>
         )}
+
+        <div>
+          <p className="font-semibold text-lg">{role}</p>
+          {leader ? (
+            <>
+              <p className="font-bold text-[#1C5739] text-xl">{leader.full_name}</p>
+            </>
+          ) : (
+            <p className="italic text-sm text-gray-500">Vacant</p>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  if (loading) return <p className="p-6">Loading…</p>;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <section className="max-w-6xl mx-auto px-4 py-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-12 text-[#1C5739]">
-          Leadership
-        </h1>
+    <div className="max-w-6xl mx-auto p-6">
+      <h1 className="text-5xl font-bold text-[#1C5739] mb-10">
+        Leadership
+      </h1>
 
-        {loading ? (
-          <p className="text-center text-gray-600">Loading...</p>
-        ) : (
-          <>
-            {/* Management Committee */}
-            <div className="mb-16">
-              <h2 className="text-3xl font-bold mb-6 text-[#1C5739]">
-                Management Committee
-              </h2>
+      <h2 className="text-3xl font-bold mb-4">Management Committee</h2>
+      <div className="bg-white rounded shadow divide-y mb-12">
+        {MANAGEMENT_ROLES.map(role => (
+          <RoleCard key={role} role={role} />
+        ))}
+      </div>
 
-              <div className="bg-white rounded-xl shadow divide-y">
-                {MANAGEMENT_POSITIONS.map(position => (
-                  <PositionCard
-                    key={position}
-                    position={position}
-                    member={getLeaderForPosition(management, position)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Sports Committee */}
-            <div className="mb-16">
-              <h2 className="text-3xl font-bold mb-6 text-[#1C5739]">
-                Sports Committee
-              </h2>
-
-              <div className="bg-white rounded-xl shadow divide-y">
-                {SPORTS_POSITIONS.map(position => (
-                  <PositionCard
-                    key={position}
-                    position={position}
-                    member={getLeaderForPosition(sports, position)}
-                  />
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-      </section>
+      <h2 className="text-3xl font-bold mb-4">Sports Committee</h2>
+      <div className="bg-white rounded shadow divide-y">
+        {SPORTS_ROLES.map(role => (
+          <RoleCard key={role} role={role} />
+        ))}
+      </div>
     </div>
   );
 }

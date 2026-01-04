@@ -4,16 +4,14 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase/client';
 
 type GalleryItem = {
-  id: string;
-  title: string;
-  image_url: string;
+  id: number;
+  image: string; // STORAGE PATH
   category: string;
-  published: boolean;
 };
 
 export default function GalleryAdmin() {
-  const [images, setImages] = useState<File[]>([]);
-  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [category, setCategory] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -22,7 +20,7 @@ export default function GalleryAdmin() {
     const { data } = await supabase
       .from('gallery')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('id', { ascending: false });
 
     setGallery(data || []);
   };
@@ -31,30 +29,24 @@ export default function GalleryAdmin() {
     fetchGallery();
   }, []);
 
-  const handleFiles = (files: FileList | null) => {
-    if (!files) return;
-
-    const fileArray = Array.from(files);
-    setImages(fileArray);
-
-    const previews = fileArray.map((file) =>
-      URL.createObjectURL(file)
-    );
-    setPreviewUrls(previews);
+  const handleFiles = (list: FileList | null) => {
+    if (!list) return;
+    const arr = Array.from(list);
+    setFiles(arr);
+    setPreviews(arr.map(file => URL.createObjectURL(file)));
   };
 
   const uploadImages = async () => {
-    if (!category || images.length === 0) {
-      alert('Category and images are required');
+    if (!category || files.length === 0) {
+      alert('Category and images required');
       return;
     }
 
     setUploading(true);
 
-    for (const file of images) {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${crypto.randomUUID()}.${fileExt}`;
-      const filePath = `gallery/${fileName}`;
+    for (const file of files) {
+      const ext = file.name.split('.').pop();
+      const filePath = `gallery/${crypto.randomUUID()}.${ext}`;
 
       const { error: uploadError } = await supabase.storage
         .from('gallery')
@@ -65,136 +57,86 @@ export default function GalleryAdmin() {
         continue;
       }
 
-      const { data } = supabase.storage
-        .from('gallery')
-        .getPublicUrl(filePath);
-
       await supabase.from('gallery').insert({
-        title: file.name,
-        image_url: data.publicUrl,
+        image: filePath, // ✅ PATH ONLY
         category,
-        published: true,
       });
     }
 
-    setImages([]);
-    setPreviewUrls([]);
+    setFiles([]);
+    setPreviews([]);
     setCategory('');
     setUploading(false);
     fetchGallery();
   };
 
-  const togglePublish = async (id: string, published: boolean) => {
-    await supabase
-      .from('gallery')
-      .update({ published: !published })
-      .eq('id', id);
-
-    fetchGallery();
-  };
-
-  const deleteImage = async (id: string) => {
+  const deleteImage = async (id: number) => {
     if (!confirm('Delete image?')) return;
-
     await supabase.from('gallery').delete().eq('id', id);
     fetchGallery();
   };
 
+  const getImageUrl = (path: string) =>
+    supabase.storage.from('gallery').getPublicUrl(path).data.publicUrl;
+
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto p-6">
       <h1 className="text-4xl font-bold text-[#1C5739] mb-8">
         Gallery Management
       </h1>
 
-      {/* Upload Box */}
-      <div className="bg-white rounded-xl shadow p-6 mb-10">
-        <h2 className="text-xl font-semibold text-[#1C5739] mb-4">
-          Upload Images
-        </h2>
-
+      {/* Upload */}
+      <div className="bg-white p-6 rounded-xl shadow mb-10">
         <input
           type="text"
-          placeholder="Category (e.g. Tournaments, Events)"
+          placeholder="Category"
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="w-full border rounded p-2 mb-4"
+          onChange={e => setCategory(e.target.value)}
+          className="border p-2 w-full mb-4"
         />
 
-        <label className="block border-2 border-dashed border-[#1C5739] rounded-lg p-6 text-center cursor-pointer hover:bg-[#f3f7f5]">
-          <input
-            type="file"
-            multiple
-            hidden
-            onChange={(e) => handleFiles(e.target.files)}
-          />
-          <p className="text-[#1C5739] font-semibold">
-            Drag & drop images here or click to browse
-          </p>
-        </label>
+        <input
+          type="file"
+          multiple
+          onChange={e => handleFiles(e.target.files)}
+        />
 
-        {previewUrls.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-            {previewUrls.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt="Preview"
-                className="rounded-lg object-cover h-32 w-full"
-              />
+        {previews.length > 0 && (
+          <div className="grid grid-cols-4 gap-4 mt-4">
+            {previews.map((src, i) => (
+              <img key={i} src={src} className="h-24 object-cover rounded" />
             ))}
           </div>
         )}
 
         <button
-          disabled={uploading}
           onClick={uploadImages}
-          className="mt-6 bg-[#1C5739] text-white px-6 py-2 rounded hover:opacity-90 disabled:opacity-50"
+          disabled={uploading}
+          className="mt-4 bg-[#1C5739] text-white px-6 py-2 rounded"
         >
-          {uploading ? 'Uploading…' : 'Upload Images'}
+          {uploading ? 'Uploading…' : 'Upload'}
         </button>
       </div>
 
-      {/* Existing Gallery */}
-      <div className="bg-white rounded-xl shadow p-6">
-        <h2 className="text-xl font-semibold text-[#1C5739] mb-4">
-          Existing Images
-        </h2>
-
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {gallery.map((img) => (
-            <div
-              key={img.id}
-              className="border rounded-lg overflow-hidden"
-            >
-              <img
-                src={img.image_url}
-                className="h-48 w-full object-cover"
-              />
-
-              <div className="p-4">
-                <p className="font-semibold">{img.category}</p>
-
-                <div className="flex justify-between mt-3">
-                  <button
-                    onClick={() =>
-                      togglePublish(img.id, img.published)
-                    }
-                    className="text-sm text-[#1C5739]"
-                  >
-                    {img.published ? 'Unpublish' : 'Publish'}
-                  </button>
-
-                  <button
-                    onClick={() => deleteImage(img.id)}
-                    className="text-sm text-red-600"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+      {/* Existing */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {gallery.map(img => (
+          <div key={img.id} className="border rounded overflow-hidden">
+            <img
+              src={getImageUrl(img.image)}
+              className="h-28 w-full object-cover"
+            />
+            <div className="p-2 flex justify-between text-sm">
+              <span>{img.category}</span>
+              <button
+                onClick={() => deleteImage(img.id)}
+                className="text-red-600"
+              >
+                Delete
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );

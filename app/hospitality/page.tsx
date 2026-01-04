@@ -72,7 +72,7 @@ export default function Hospitality() {
               </div>
               <div className="md:w-1/2 h-56 md:h-64 rounded-xl overflow-hidden shadow">
                 <img
-                  src="/images/restaurant.jpg"
+                  src="./restaurant.jpg"
                   alt="Restaurant & Bar"
                   className="w-full h-full object-cover"
                 />
@@ -83,16 +83,16 @@ export default function Hospitality() {
             <div className="flex flex-col md:flex-row items-center gap-8 md:flex-row-reverse">
               <div className="md:w-1/2">
                 <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
-                  Conference Halls
+                  Events
                 </h2>
                 <p className="text-gray-700 mb-4">
-                  Catch live sports, enjoy drinks, and connect with fellow members and guests. Our sports bar features multiple screens, comfortable seating, and a vibrant atmosphere perfect for watching the big match.
+                  We offer different packages for groups and events ranging from private meetings, full conference packages, weddings, photo shoots, birthdays and other children events. Contact us for a specialized quote and we will be happy to host you. 
                 </p>
               </div>
               <div className="md:w-1/2 h-56 md:h-64 rounded-xl overflow-hidden shadow">
                 <img
-                  src="/images/conference.jpg"
-                  alt="Conference Halls"
+                  src="./events.jpg"
+                  alt="Events"
                   className="w-full h-full object-cover"
                 />
               </div>

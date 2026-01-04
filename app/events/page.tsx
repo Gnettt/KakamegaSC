@@ -1,111 +1,93 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase/client';
 
-interface Event {
-  id: string;
+type Event = {
+  id: number;
+  image: string | null;
   title: string;
   description: string;
   date: string;
   location: string;
   event_type: string;
-}
+  published: boolean;
+};
 
 export default function Events() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
-      try {
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-        );
+      const { data } = await supabase
+        .from('events')
+        .select('*')
+        .eq('published', true)
+        .order('date', { ascending: true });
 
-        const { data, error } = await supabase
-          .from('events')
-          .select('*')
-          .order('date', { ascending: true });
-
-        if (error) {
-          console.error('Error fetching events:', error);
-          setEvents([]);
-        } else {
-          setEvents(data || []);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        setEvents([]);
-      } finally {
-        setLoading(false);
-      }
+      setEvents(data || []);
+      setLoading(false);
     };
 
     fetchEvents();
   }, []);
 
+  const getImageUrl = (path: string) =>
+    supabase.storage.from('events').getPublicUrl(path).data.publicUrl;
+
   return (
-    <div className="min-h-screen">
-      <section className="section-padding">
-        <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1C5739' }}>
-            Events & Tournaments
-          </h1>
-          <p className="text-gray-700 text-lg mb-8 max-w-2xl">
-            From competitive tournaments to social experiences, our calendar brings members together all year round.
-          </p>
+    <div className="min-h-screen p-6">
+      <h1 className="text-4xl font-bold mb-8 text-[#1C5739]">
+        Events & Tournaments
+      </h1>
 
-          {loading ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">Loading events...</p>
-            </div>
-          ) : events.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">No events scheduled at the moment. Check back soon!</p>
-            </div>
-          ) : (
-            <div className="grid gap-6">
-              {events.map((event) => (
-                <div
-                  key={event.id}
-                  className="border-l-4 p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition"
-                  style={{ borderColor: '#1C5739' }}
-                >
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C5739' }}>
-                        {event.title}
-                      </h3>
-                      <p className="text-gray-700 mb-3">{event.description}</p>
-                      <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                        <span>📅 {new Date(event.date).toLocaleDateString()}</span>
-                        <span>📍 {event.location}</span>
-                        <span className="px-3 py-1 rounded-full" style={{ backgroundColor: '#f8f6f1', color: '#1C5739' }}>
-                          {event.event_type}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+      {loading ? (
+        <p>Loading…</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {events.map((event) => (
+            <div
+              key={event.id}
+              className="bg-white rounded-xl shadow overflow-hidden"
+            >
+              {event.image && (
+                <img
+                  src={getImageUrl(event.image!)}
+                  className="w-full h-52 object-cover cursor-pointer"
+                  onClick={() =>
+                    setSelectedImage(getImageUrl(event.image!))
+                  }
+                />
+              )}
 
-          <div className="mt-12 p-8 rounded-lg" style={{ backgroundColor: '#f8f6f1' }}>
-            <h2 className="text-2xl font-bold mb-4" style={{ color: '#1C5739' }}>
-              Featured Events
-            </h2>
-            <ul className="space-y-2 text-gray-700">
-              <li>⛳ Captain's Tournament</li>
-              <li>🏆 Club Opens</li>
-              <li>👶 Junior Golf Events</li>
-              <li>�� Sponsorship Opportunities</li>
-            </ul>
-          </div>
+              <div className="p-4">
+                <h3 className="font-bold text-lg mb-2">{event.title}</h3>
+                <p className="text-sm text-gray-600 mb-3">
+                  {event.description}
+                </p>
+                <p className="text-xs text-gray-500">
+                  📅 {new Date(event.date).toLocaleDateString()} • 📍{' '}
+                  {event.location}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
+      )}
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          onClick={() => setSelectedImage(null)}
+        >
+          <img
+            src={selectedImage}
+            className="max-h-[90vh] rounded-xl"
+          />
+        </div>
+      )}
     </div>
   );
 }

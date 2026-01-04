@@ -1,10 +1,7 @@
 {
-  "/hospitality/page": "app/hospitality/page.js",
-  "/about/page": "app/about/page.js",
-  "/sports-facilities/page": "app/sports-facilities/page.js",
-  "/membership/page": "app/membership/page.js",
   "/leadership/page": "app/leadership/page.js",
-  "/downloads/page": "app/downloads/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/admin/news/page": "app/admin/news/page.js",
+  "/admin/leadership/page": "app/admin/leadership/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js"
 }

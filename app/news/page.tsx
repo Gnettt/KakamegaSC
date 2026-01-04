@@ -3,96 +3,92 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-interface NewsArticle {
-  id: string;
+type NewsItem = {
+  news_id: number;
   title: string;
-  content: string;
   category: string;
-  created_at: string;
-}
+  content: string;
+  image?: string | null; // stores file path from 'news' bucket
+};
 
-export default function News() {
-  const [news, setNews] = useState<NewsArticle[]>([]);
+// Initialize Supabase client once
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+);
+
+export default function NewsPage() {
+  const [newsList, setNewsList] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchNews = async () => {
-      try {
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-        );
+      const { data, error } = await supabase
+        .from('news')
+        .select('*')
+        .order('news_id', { ascending: false });
 
-        const { data, error } = await supabase
-          .from('news')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) {
-          console.error('Error fetching news:', error);
-          setNews([]);
-        } else {
-          setNews(data || []);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        setNews([]);
-      } finally {
-        setLoading(false);
+      if (error) {
+        console.error('Error fetching news:', error);
+        setNewsList([]);
+      } else {
+        setNewsList(data || []);
       }
+
+      setLoading(false);
     };
 
     fetchNews();
   }, []);
 
-  return (
-    <div className="min-h-screen">
-      <section className="section-padding">
-        <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1C5739' }}>
-            News & Announcements
-          </h1>
-          <p className="text-gray-700 text-lg mb-8">
-            Stay updated with official club communication and announcements.
-          </p>
+  const getImageUrl = (path: string | null) => {
+    if (!path) return null;
+    // Fetch public URL from 'news' bucket
+    return supabase.storage.from('news').getPublicUrl(path).data.publicUrl;
+  };
 
-          {loading ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">Loading news...</p>
-            </div>
-          ) : news.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">No news articles at the moment. Check back soon!</p>
-            </div>
-          ) : (
-            <div className="grid gap-6">
-              {news.map((article) => (
+  return (
+    <div className="min-h-screen bg-gray-50 py-12">
+      <section className="max-w-6xl mx-auto px-4">
+        <h1 className="text-4xl md:text-5xl font-bold mb-12 text-[#1C5739]">
+          News & Updates
+        </h1>
+
+        {loading ? (
+          <p className="text-center text-gray-600">Loading news...</p>
+        ) : newsList.length === 0 ? (
+          <p className="text-center text-gray-600">
+            No news articles available at the moment. Check back soon!
+          </p>
+        ) : (
+          <div className="grid gap-8">
+            {newsList.map((item) => {
+              const imageUrl = getImageUrl(item.image ?? null);
+
+              return (
                 <div
-                  key={article.id}
-                  className="border-l-4 p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition"
-                  style={{ borderColor: '#1C5739' }}
+                  key={item.news_id}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition"
                 >
-                  <div className="flex justify-between items-start gap-4 mb-3">
-                    <h3 className="text-2xl font-bold flex-1" style={{ color: '#1C5739' }}>
-                      {article.title}
-                    </h3>
-                    <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: '#f8f6f1', color: '#1C5739' }}>
-                      {article.category}
-                    </span>
+                  {imageUrl && (
+                    <img
+                      src={imageUrl}
+                      alt={item.title}
+                      className="w-full h-64 object-cover"
+                    />
+                  )}
+                  <div className="p-6">
+                    <h2 className="text-2xl font-bold mb-2 text-[#1C5739]">
+                      {item.title}
+                    </h2>
+                    <p className="text-sm text-gray-500 mb-4">{item.category}</p>
+                    <p className="text-gray-700 whitespace-pre-line">{item.content}</p>
                   </div>
-                  <p className="text-gray-600 text-sm mb-3">
-                    {new Date(article.created_at).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </p>
-                  <p className="text-gray-700 leading-relaxed">{article.content}</p>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </section>
     </div>
   );

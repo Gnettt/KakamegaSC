@@ -33,11 +33,7 @@ export default function About() {
 
         {/* IMAGE */}
         <div className="w-full md:w-1/2 h-[200px] md:h-[260px] rounded-lg overflow-hidden shadow-sm">
-          <img
-            src="/images/history.jpg"
-            alt="Kakamega Sports Club history"
-            className="w-full h-full object-cover"
-          />
+        <img src="./history.jpg" alt="Kakamega Sports Club history" className="w-full h-full object-cover" />
         </div>
       </div>
 
@@ -94,7 +90,7 @@ export default function About() {
         {/* IMAGE */}
         <div className="w-full md:w-1/2 h-[200px] md:h-[260px] rounded-lg overflow-hidden shadow-sm">
           <img
-            src="/images/values.jpg"
+            src="./values.jpg"
             alt="Kakamega Sports Club values"
             className="w-full h-full object-cover"
           />
